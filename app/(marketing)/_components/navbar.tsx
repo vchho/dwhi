@@ -1,7 +1,5 @@
 "use client";
 
-import { SignInButton } from "@clerk/clerk-react";
-
 // import { useScrollTop } from "@/hooks/use-scroll-top";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
@@ -10,10 +8,14 @@ import { cn } from "@/lib/utils";
 
 import { Logo } from "./logo";
 
-export const Navbar = () => {
-  // const { isAuthenticated, isLoading } = useConvexAuth();
-  // const scrolled = useScrollTop();
+import Link from "next/link";
+import { Login } from "@/lib/logout";
+import { useSession } from "next-auth/react";
 
+export const Navbar = ({ user }: { user: any }) => {
+  const isLoggedIn = !!useSession().data;
+
+  console.log("user", user);
   return (
     <div
       className={cn(
@@ -23,28 +25,20 @@ export const Navbar = () => {
     >
       <Logo />
       <div className="md:ml-auto md:justify-end justify-between w-full flex items-center gap-x-2">
-        {/* {isLoading && (
-          <Spinner />
-        )} */}
-        {/* {!isAuthenticated && !isLoading && ( */}
-        <>
-          <SignInButton>
-            <Button variant="ghost" size="sm">
-              Log in
-            </Button>
-          </SignInButton>
-          <SignInButton mode="modal">
-            <Button size="sm">Get DWHI free</Button>
-          </SignInButton>
-        </>
-        {/* )} */}
-        {/* {isAuthenticated && !isLoading && ( */}
-        <>
-          <Button variant="ghost" size="sm" asChild>
-            Enter DWHI
-          </Button>
-        </>
-        {/* )} */}
+        {isLoggedIn ? (
+          <Link href="/dashboard">
+            <Button>Dashboard</Button>
+          </Link>
+        ) : (
+          <Login />
+        )}
+
+        <Button size="sm">Get DWHI free</Button>
+
+        <Button variant="ghost" size="sm" asChild>
+          Enter DWHI
+        </Button>
+
         <ModeToggle />
       </div>
     </div>
