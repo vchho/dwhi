@@ -1,18 +1,16 @@
 import { Navbar } from "./_components/navbar";
 
-const MarketingLayout = ({
-  children
-}: {
-  children: React.ReactNode;
-}) => {
-  return ( 
+import { getCurrentUser } from "@/lib/session";
+
+const MarketingLayout = ({ children }: { children: React.ReactNode }) => {
+  const user = getCurrentUser();
+
+  return (
     <div className="h-full dark:bg-[#1F1F1F]">
-      <Navbar />
-      <main className="h-full pt-40">
-        {children}
-      </main>
+      <Navbar user={user} />
+      <main className="h-full pt-40">{children}</main>
     </div>
   );
-}
+};
 
 export default MarketingLayout;
