@@ -34,7 +34,6 @@ export const nextAuthOptions = {
   ],
   callbacks: {
     async signIn(options) {
-      console.log(options);
       options.user.email = options.user.email;
       options.user.name = options.user.name;
       return true;
