@@ -8,9 +8,14 @@ export async function getPantrys() {
 
   if (!user) {
     console.log("unauthorized");
+    return;
   }
 
-  const data = await prisma.list.findMany({});
+  const data = await prisma.list.findMany({
+    where: {
+      userId: user?.id,
+    },
+  });
 
   return data;
 }
