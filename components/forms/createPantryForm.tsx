@@ -20,7 +20,10 @@ import { createPantryAction } from "@/app/(site)/pantry/create/actions";
 import { toast } from "../ui/use-toast";
 
 export const CreatePantryValidator = z.object({
-  name: z.string().min(3).max(150),
+  name: z
+    .string()
+    .min(3, { message: "Pantry name must have a minimum of 3 characters" })
+    .max(150, { message: "Pantry name has a maximum of 150 characters" }),
 });
 
 type FormData = z.infer<typeof CreatePantryValidator>;
@@ -69,7 +72,7 @@ const CreatePantryForm = () => {
               <FormLabel>Pantry name</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Type pantry name here."
+                  placeholder="Type pantry name here"
                   {...field}
                   disabled={isLoading}
                   // autoFocus
