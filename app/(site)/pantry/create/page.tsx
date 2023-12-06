@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ShowBack } from "@/components/ui/header";
-import CreatePollClient from "@/components/wrappers/CreatePantryClient";
+import CreatePantryClient from "@/components/wrappers/CreatePantryClient";
 
 const CreatePantry = () => {
   return (
@@ -21,7 +21,7 @@ const CreatePantry = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <CreatePollClient />
+          <CreatePantryClient />
         </CardContent>
       </Card>
     </Shell>

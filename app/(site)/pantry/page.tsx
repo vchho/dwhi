@@ -3,18 +3,26 @@ import { buttonVariants } from "@/components/ui/button";
 import { Header } from "@/components/ui/header";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { getPantrys } from "./loaders";
 
-const PantryPage = () => {
+const PantryPage = async () => {
+  const pantrys = await getPantrys();
+
   return (
     <Shell layout="dashboard" className="px-1">
-      <Header title="Pantries" description="All of your current pantries are here!"/>
+      <Header
+        title="Pantries"
+        description="All of your current pantries are here!"
+      />
       <Link
         href="/pantry/create"
         className={cn(buttonVariants({ size: "sm" }), "w-fit")}
       >
         Create Pantry
       </Link>
-      <h1>List of Pantries here</h1>
+      {pantrys.map((pantry) => {
+        return <div key={pantry.id}>{pantry.name}</div>;
+      })}
     </Shell>
   );
 };
