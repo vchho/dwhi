@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ShowBack } from "@/components/ui/header";
-import CreatePantryClient from "@/components/wrappers/CreatePantryClient";
+import CreatePantryClient from "./_components/CreatePantryClient";
 
 const CreatePantry = () => {
   return (
