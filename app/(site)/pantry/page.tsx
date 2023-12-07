@@ -22,15 +22,16 @@ const PantryPage = async () => {
         Create Pantry
       </Link>
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-5">
-        {pantrys.map((pantry) => {
-          return (
-            <PantryCard
-              key={pantry.id}
-              name={pantry.name}
-              pantryId={pantry.id}
-            />
-          );
-        })}
+        {pantrys &&
+          pantrys.map((pantry) => {
+            return (
+              <PantryCard
+                key={pantry.id}
+                name={pantry.name}
+                pantryId={pantry.id}
+              />
+            );
+          })}
       </div>
     </Shell>
   );
