@@ -4,6 +4,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { MobileNav } from "./mobile-nav";
 import { getSession } from "@/lib/session";
 import UserAccountDropdown from "./user-dropdown";
+import { ThemeToggle } from "./theme-toggle";
 
 interface NavbarType {
   id: number;
@@ -71,6 +72,8 @@ export const Navbar = async () => {
       </div>
       <div className="flex gap-x-4 items-center">
         {/* <Searchbar /> */}
+
+        <ThemeToggle />
 
         {session ? (
           <UserAccountDropdown session={session} />
