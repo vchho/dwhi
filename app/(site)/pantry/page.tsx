@@ -3,17 +3,21 @@ import { buttonVariants } from "@/components/ui/button";
 import { Header } from "@/components/ui/header";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { getPantrys } from "./loaders";
+import { getPantries } from "./loaders";
 import PantryCard from "./_components/pantry-card";
 
 const PantryPage = async () => {
-  const pantrys = await getPantrys();
+  const pantries = await getPantries();
 
   return (
     <Shell layout="dashboard" className="px-1">
       <Header
         title="Pantries"
-        description="All of your current pantries are here!"
+        description={
+          pantries?.length === 0
+            ? "You currently don't have any pantries. Why not make some?"
+            : "All of your current pantries are here!"
+        }
       />
       <Link
         href="/pantry/create"
@@ -22,8 +26,8 @@ const PantryPage = async () => {
         Create Pantry
       </Link>
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-5">
-        {pantrys &&
-          pantrys.map((pantry) => {
+        {pantries &&
+          pantries.map((pantry) => {
             return (
               <PantryCard
                 key={pantry.id}

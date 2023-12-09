@@ -3,7 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
 
-export async function getPantrys() {
+export async function getPantries() {
   const user = await getCurrentUser();
 
   if (!user) {
