@@ -5,10 +5,16 @@ import { MobileNav } from "./mobile-nav";
 import { getSession } from "@/lib/session";
 import UserAccountDropdown from "./user-dropdown";
 
+interface NavbarType {
+  id: number;
+  label: string;
+  href: string;
+}
+
 export const Navbar = async () => {
   const session = await getSession();
 
-  const navItems: any[] = [
+  const navItems: NavbarType[] = [
     {
       id: 1,
       label: "Pantry",
