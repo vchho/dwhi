@@ -19,7 +19,7 @@ import { z } from "zod";
 import { createPantryAction } from "@/app/(site)/pantry/create/actions";
 import { toast } from "../ui/use-toast";
 
-export const CreatePantryValidator = z.object({
+const CreatePantryValidator = z.object({
   name: z
     .string()
     .min(3, { message: "Pantry name must have a minimum of 3 characters" })
