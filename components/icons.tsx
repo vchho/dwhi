@@ -1,6 +1,6 @@
 import {
   LucideProps,
-  type Icon as LucideIcon,
+  LucideIcon,
   Search,
   User,
   LogOut,

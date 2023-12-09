@@ -20,4 +20,6 @@ export async function createPantryAction({
       userId: user?.id,
     },
   });
+
+  return data;
 }
