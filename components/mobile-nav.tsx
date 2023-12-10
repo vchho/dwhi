@@ -95,20 +95,20 @@ export const adminSidebarNavItems: SidebarNavType[] = [
   },
 ];
 
-export const pollSidebarNavItems: SidebarNavType[] = [
-  {
-    id: 1,
-    label: "Polls",
-    Icon: Icons.activity,
-    href: "/poll",
-  },
-  {
-    id: 2,
-    label: "Results",
-    Icon: Icons.info,
-    href: "/poll/results",
-  },
-];
+// export const pollSidebarNavItems: SidebarNavType[] = [
+//   {
+//     id: 1,
+//     label: "Polls",
+//     Icon: Icons.activity,
+//     href: "/poll",
+//   },
+//   {
+//     id: 2,
+//     label: "Results",
+//     Icon: Icons.info,
+//     href: "/poll/results",
+//   },
+// ];
 
 interface MobileLinkProps {
   children?: React.ReactNode;
@@ -233,7 +233,7 @@ export function MobileNav({ mainNavItems, session }: MobileNavProps) {
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="poll">
+              {/* <AccordionItem value="poll">
                 <AccordionTrigger className="text-sm">Poll</AccordionTrigger>
                 <AccordionContent>
                   <div className="flex flex-col space-y-2">
@@ -261,7 +261,7 @@ export function MobileNav({ mainNavItems, session }: MobileNavProps) {
                     )}
                   </div>
                 </AccordionContent>
-              </AccordionItem>
+              </AccordionItem> */}
 
               {session && session.user.role === "ADMIN" && (
                 <AccordionItem value="Admin Panel">
