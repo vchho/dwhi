@@ -68,7 +68,8 @@ model List {
   userId String? @map("user_id")
   user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  name String
+  name        String
+  description String?
 
   listItems ListItem[]
   createdAt DateTime   @default(now())

@@ -24,6 +24,14 @@ const CreatePantryValidator = z.object({
     .string()
     .min(3, { message: "Pantry name must have a minimum of 3 characters" })
     .max(150, { message: "Pantry name has a maximum of 150 characters" }),
+  description: z
+    .string()
+    .min(3, {
+      message: "Pantry description must have a minimum of 3 characters",
+    })
+    .max(150, {
+      message: "Pantry description has a maximum of 150 characters",
+    }),
 });
 
 type FormData = z.infer<typeof CreatePantryValidator>;
@@ -36,12 +44,16 @@ const CreatePantryForm = () => {
     resolver: zodResolver(CreatePantryValidator),
     defaultValues: {
       name: "",
+      description: "",
     },
   });
 
   const onSubmit = async (content: FormData) => {
     setIsLoading(true);
-    createPantryAction({ pantryName: content.name })
+    createPantryAction({
+      pantryName: content.name,
+      pantryDescription: content.description,
+    })
       .then(() => {
         setIsLoading(false);
         toast({
@@ -54,6 +66,10 @@ const CreatePantryForm = () => {
       })
       .catch((error) => {
         setIsLoading(false);
+        toast({
+          title: "Error!",
+          description: "There was an error in creating your pantry!",
+        });
         console.log("Error from createPantryForm", error);
       });
   };
@@ -73,6 +89,25 @@ const CreatePantryForm = () => {
               <FormControl>
                 <Input
                   placeholder="Type pantry name here"
+                  {...field}
+                  disabled={isLoading}
+                  // autoFocus
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Type pantry description here"
                   {...field}
                   disabled={isLoading}
                   // autoFocus

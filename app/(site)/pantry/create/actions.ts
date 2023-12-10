@@ -5,8 +5,10 @@ import { getCurrentUser } from "@/lib/session";
 
 export async function createPantryAction({
   pantryName,
+  pantryDescription,
 }: {
   pantryName: string;
+  pantryDescription: string;
 }) {
   const user = await getCurrentUser();
 
@@ -17,6 +19,7 @@ export async function createPantryAction({
   const data = await prisma.list.create({
     data: {
       name: pantryName,
+      description: pantryDescription,
       userId: user?.id,
     },
   });
