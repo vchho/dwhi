@@ -32,6 +32,7 @@ const PantryPage = async () => {
               <PantryCard
                 key={pantry.id}
                 name={pantry.name}
+                description={pantry.description ? pantry.description : ""}
                 pantryId={pantry.id}
               />
             );

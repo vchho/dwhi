@@ -21,11 +21,6 @@ export const Navbar = async () => {
       label: "Pantry",
       href: "/pantry",
     },
-    {
-      id: 5,
-      label: "Poll",
-      href: "/poll",
-    },
   ];
 
   return (
