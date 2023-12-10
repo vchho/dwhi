@@ -26,9 +26,9 @@ const CreatePantryValidator = z.object({
     .min(3, { message: "Pantry name must have a minimum of 3 characters" })
     .max(150, { message: "Pantry name has a maximum of 150 characters" }),
   description: z.preprocess(
-    (foo) => {
-      if (!foo || typeof foo !== "string") return undefined;
-      return foo === "" ? undefined : foo;
+    (desc) => {
+      if (!desc || typeof desc !== "string") return undefined;
+      return desc === "" ? undefined : desc;
     },
     z
       .string()
