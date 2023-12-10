@@ -19,19 +19,27 @@ import { z } from "zod";
 import { createPantryAction } from "@/app/(site)/pantry/create/actions";
 import { toast } from "../ui/use-toast";
 
+// https://stackoverflow.com/questions/73715295/react-hook-form-with-zod-resolver-optional-field
 const CreatePantryValidator = z.object({
   name: z
     .string()
     .min(3, { message: "Pantry name must have a minimum of 3 characters" })
     .max(150, { message: "Pantry name has a maximum of 150 characters" }),
-  description: z
-    .string()
-    .min(3, {
-      message: "Pantry description must have a minimum of 3 characters",
-    })
-    .max(150, {
-      message: "Pantry description has a maximum of 150 characters",
-    }),
+  description: z.preprocess(
+    (foo) => {
+      if (!foo || typeof foo !== "string") return undefined;
+      return foo === "" ? undefined : foo;
+    },
+    z
+      .string()
+      .min(3, {
+        message: "Pantry description must have a minimum of 3 characters",
+      })
+      .max(150, {
+        message: "Pantry description has a maximum of 150 characters",
+      })
+      .optional(),
+  ),
 });
 
 type FormData = z.infer<typeof CreatePantryValidator>;
@@ -52,7 +60,7 @@ const CreatePantryForm = () => {
     setIsLoading(true);
     createPantryAction({
       pantryName: content.name,
-      pantryDescription: content.description,
+      pantryDescription: content.description ? content.description : "",
     })
       .then(() => {
         setIsLoading(false);
