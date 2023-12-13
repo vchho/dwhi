@@ -4,9 +4,6 @@ import { Header } from "@/components/ui/header";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Icons } from "@/components/icons";
-import CreatePantryItemClient from "./_components/CreatePantryItemClient";
 
 // https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes#optional-catch-all-segments
 export default async function Pantry({ params }: { params: { id: string } }) {
@@ -30,12 +27,13 @@ export default async function Pantry({ params }: { params: { id: string } }) {
         >
           Update Pantry
         </Link>
-        <Button size={"sm"} variant={"outline"}>
-          <Icons.plus className="h-4 w-4" />
-          Add pantry item
-        </Button>
+        <Link
+          href={`/pantry/${pantryId}/create`}
+          className={cn(buttonVariants({ size: "sm" }), "w-fit")}
+        >
+          Create Pantry Item
+        </Link>
       </div>
-      <CreatePantryItemClient />
     </Shell>
   );
 }
