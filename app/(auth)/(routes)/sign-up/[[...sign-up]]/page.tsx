@@ -1,9 +1,5 @@
-import { SignUp } from "@clerk/nextjs";
-
 const RegisterPage = () => {
-  return (
-    <SignUp />
-  )
-}
+  return <h1>sign up</h1>;
+};
 
 export default RegisterPage;
