@@ -29,8 +29,8 @@ import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 
 const CreatePantryItemValidator = z.object({
-  // expiresAt: z.date().min(new Date()),
-  expiresAt: z.union([z.date().min(new Date()), z.undefined()]),
+  expiresAt: z.date().min(new Date()),
+  // expiresAt: z.union([z.date().min(new Date()), z.undefined()]),
   measurement: z.string({
     required_error: "Please select a measurement",
   }),
@@ -43,7 +43,8 @@ const CreatePantryItemValidator = z.object({
       message: "Pantry Item name has a maximum of 150 characters",
     }),
   // https://github.com/shadcn-ui/ui/issues/421
-  quantity: z
+  // https://github.com/orgs/react-hook-form/discussions/6980#discussioncomment-6982493
+  quantity: z.coerce
     .number({ required_error: "Quantity is required" })
     .positive({ message: "Quantity must be positive" })
     .int({ message: "Quantity must be integer" })
@@ -54,6 +55,10 @@ const CreatePantryItemValidator = z.object({
         .positive({ message: "Quantity must be positive" })
         .int({ message: "Quantity must be integer" }),
     ),
+  // quantity: z
+  //   .number()
+  //   .min(0, "Amount must be a positive number")
+  //   .parse((value: string) => parseFloat(value)),
 });
 
 type FormData = z.infer<typeof CreatePantryItemValidator>;
@@ -70,12 +75,14 @@ export default function CreatePantryItem({ pantryId }: { pantryId: string }) {
       expiresAt: new Date(),
       measurement: "",
       name: "",
-      quantity: 0,
     },
   });
 
-  const onSubmit = async (content: FormData) => {
+  const onSubmit = async (
+    content: z.infer<typeof CreatePantryItemValidator>,
+  ) => {
     setIsLoading(true);
+    console.log("content", content);
 
     createPantryItem({
       pantryId: pantryId,
@@ -136,15 +143,13 @@ export default function CreatePantryItem({ pantryId }: { pantryId: string }) {
                   <Input
                     placeholder="Pantry item quantity here"
                     {...field}
-                    type="number"
+                    type="text"
                     disabled={isLoading}
-                    pattern="[0-9]*" // to receive only numbers without showing does weird arrows in the input                    value={field.value || ""} // avoid errors of uncontrolled vs controlled
+                    // pattern="/(\D+)/g" // to receive only numbers without showing does weird arrows in the input                    value={field.value || ""} // avoid errors of uncontrolled vs controlled
                     inputMode="numeric"
-                    onChange={
-                      (e) =>
-                        e.target.validity.valid &&
-                        field.onChange(e.target.value) // e.target.validity.valid is required for pattern to work
-                    }
+                    onChange={(e) => {
+                      e.target.validity.valid && field.onChange(e.target.value); // e.target.validity.valid is required for pattern to work
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -171,7 +176,7 @@ export default function CreatePantryItem({ pantryId }: { pantryId: string }) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Measurement</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue="">
+                <Select onValueChange={field.onChange} disabled={isLoading}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a measurement " />
