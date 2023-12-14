@@ -84,6 +84,10 @@ model ListItem {
   listId String
   list   List   @relation(fields: [listId], references: [id], onDelete: Cascade)
 
+  measurement String
+  quantity    Int
+
+  expiresAt DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

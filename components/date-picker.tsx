@@ -27,8 +27,8 @@ export function DatePicker({ setValue, value }: DatePickerProps) {
   const handleOnSelect: SelectSingleEventHandler = (date) => {
     // onSelect?.(date)
     setDate(date);
-    setIsPopoverOpen(false)
-  }
+    setIsPopoverOpen(false);
+  };
 
   return (
     <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
@@ -36,7 +36,8 @@ export function DatePicker({ setValue, value }: DatePickerProps) {
         <Button
           variant={"outline"}
           className={cn(
-            "max-w-[280px] justify-start text-left font-normal",
+            // "max-w-[280px] justify-start text-left font-normal",
+            "w-full justify-start text-left font-normal",
             !date && "text-muted-foreground",
           )}
         >

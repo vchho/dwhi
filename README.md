@@ -30,6 +30,12 @@ Made a change to the schema?
 npx prisma migrate dev --name *insert text here*
 ```
 
+Want to sync your local Prisma Schema to the prod database?
+
+```bash
+npx prisma db push
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

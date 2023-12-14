@@ -26,6 +26,12 @@ export type dropdownItemType = {
 
 const dropdownItem: dropdownItemType[] = [
   {
+    id: 3,
+    label: "Profile",
+    Icon: Icons.user,
+    href: "/profile",
+  },
+  {
     id: 1,
     label: "About",
     Icon: Icons.info,
