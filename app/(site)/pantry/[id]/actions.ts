@@ -24,6 +24,24 @@ export async function getPantry({ pantryId }: { pantryId: string }) {
   return data;
 }
 
+export async function getPantryItems({ pantryId }: { pantryId: string }) {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    console.log("unauthorized");
+    return;
+  }
+
+  const data = await prisma.listItem.findMany({
+    where: {
+      userId: user.id,
+      listId: pantryId,
+    },
+  });
+
+  return data;
+}
+
 export async function deletePantry({ pantryId }: { pantryId: string }) {
   const user = await getCurrentUser();
 
