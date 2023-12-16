@@ -82,7 +82,6 @@ export default function CreatePantryItem({ pantryId }: { pantryId: string }) {
     content: z.infer<typeof CreatePantryItemValidator>,
   ) => {
     setIsLoading(true);
-    console.log("content", content);
 
     createPantryItem({
       pantryId: pantryId,

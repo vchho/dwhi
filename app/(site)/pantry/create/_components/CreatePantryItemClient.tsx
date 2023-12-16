@@ -35,7 +35,7 @@ const PantryItemFormSkeleton = () => {
         <Skeleton className="h-10 w-full" />
       </div>
 
-      <Skeleton className="h-8 w-20" />
+      <Skeleton className="h-8 w-20 mt-3" />
     </div>
   );
 };
