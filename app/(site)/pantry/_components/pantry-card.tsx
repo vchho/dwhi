@@ -1,3 +1,4 @@
+import { PantryAction } from "@/components/pantry-action";
 import {
   Card,
   CardContent,
@@ -21,7 +22,12 @@ const PantryCard = ({
       <Card>
         <CardHeader className="border-b p-0"></CardHeader>
         <CardContent className="grid gap-[2px] p-4">
-          <CardTitle className="truncate py-[2px]">{name}</CardTitle>
+          <CardTitle className="truncate py-[2px]">
+            <div className="flex justify-between">
+              {name}
+              <PantryAction pantryId={pantryId} />
+            </div>
+          </CardTitle>
           <CardDescription className="line-clamp-2">
             {description}
           </CardDescription>
