@@ -10,8 +10,12 @@ const EditPantryForm = dynamic(
   },
 );
 
-const EditPantryClient = () => {
-  return <EditPantryForm />;
+const EditPantryClient = ({
+  pantry,
+}: {
+  pantry: { name: string; description: string };
+}) => {
+  return <EditPantryForm pantry={pantry} />;
 };
 
 export default EditPantryClient;

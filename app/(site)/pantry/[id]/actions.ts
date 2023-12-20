@@ -3,7 +3,13 @@
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
 
-export async function getPantry({ pantryId }: { pantryId: string }) {
+export async function getPantry({
+  pantryId,
+  needListItems,
+}: {
+  pantryId: string;
+  needListItems: boolean;
+}) {
   const user = await getCurrentUser();
 
   if (!user) {
@@ -17,7 +23,8 @@ export async function getPantry({ pantryId }: { pantryId: string }) {
     },
     select: {
       name: true,
-      listItems: true,
+      description: true,
+      listItems: needListItems,
     },
   });
 

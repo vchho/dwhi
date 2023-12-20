@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { ShowBack } from "@/components/ui/header";
 import EditPantryClient from "./_components/EditPantryClient";
+import { getPantry } from "../actions";
 
 export default async function EditPantry({
   params,
@@ -15,6 +16,17 @@ export default async function EditPantry({
   params: { id: string };
 }) {
   const pantryId = params.id;
+
+  const data = await getPantry({ pantryId: pantryId, needListItems: false });
+
+  if (!data) {
+    return;
+  }
+
+  const pantry = {
+    name: data?.name,
+    description: data?.description ? data.description : "",
+  };
 
   return (
     <Shell layout="dashboard" className="px-1">
@@ -27,7 +39,7 @@ export default async function EditPantry({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <EditPantryClient />
+          <EditPantryClient pantry={pantry} />
         </CardContent>
       </Card>
     </Shell>

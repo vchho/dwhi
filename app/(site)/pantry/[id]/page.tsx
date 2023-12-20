@@ -23,7 +23,7 @@ dayjs.extend(timezone);
 // https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes#optional-catch-all-segments
 export default async function Pantry({ params }: { params: { id: string } }) {
   const pantryId = params.id;
-  const data = await getPantry({ pantryId: pantryId });
+  const data = await getPantry({ pantryId: pantryId, needListItems: true });
   const pantryItems = await getPantryItems({ pantryId: pantryId });
 
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;

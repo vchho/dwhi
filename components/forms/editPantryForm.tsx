@@ -44,15 +44,22 @@ const EditPantryValidator = z.object({
 
 type FormData = z.infer<typeof EditPantryValidator>;
 
-const EditPantryForm = () => {
+const EditPantryForm = ({
+  pantry,
+}: {
+  pantry: {
+    name: string;
+    description: string;
+  };
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const form = useForm<FormData>({
     resolver: zodResolver(EditPantryValidator),
     defaultValues: {
-      name: "",
-      description: "",
+      name: pantry.name,
+      description: pantry ? pantry?.description : "",
     },
   });
 
@@ -127,8 +134,8 @@ const EditPantryForm = () => {
         />
 
         <Button className="w-fit" size="sm" disabled={isLoading}>
-          Create
-          <span className="sr-only">Create pantry</span>
+          Update
+          <span className="sr-only">Update pantry</span>
         </Button>
       </form>
     </Form>
