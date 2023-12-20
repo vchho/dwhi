@@ -24,6 +24,7 @@ export default async function EditPantry({
   }
 
   const pantry = {
+    pantryId: pantryId,
     name: data?.name,
     description: data?.description ? data.description : "",
   };

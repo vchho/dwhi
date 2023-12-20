@@ -49,6 +49,35 @@ export async function getPantryItems({ pantryId }: { pantryId: string }) {
   return data;
 }
 
+export async function updatePantry({
+  pantryId,
+  pantryName,
+  pantryDescription,
+}: {
+  pantryId: string;
+  pantryName: string;
+  pantryDescription: string;
+}) {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    console.log("unauthorized");
+    return;
+  }
+
+  const data = await prisma.list.update({
+    data: {
+      name: pantryName,
+      description: pantryDescription,
+    },
+    where: {
+      id: pantryId,
+    },
+  });
+
+  return data;
+}
+
 export async function deletePantry({ pantryId }: { pantryId: string }) {
   const user = await getCurrentUser();
 

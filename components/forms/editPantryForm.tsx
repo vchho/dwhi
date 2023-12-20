@@ -16,8 +16,9 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { createPantryAction } from "@/app/(site)/pantry/create/actions";
+// import { createPantryAction } from "@/app/(site)/pantry/create/actions";
 import { toast } from "../ui/use-toast";
+import { updatePantry } from "@/app/(site)/pantry/[id]/actions";
 
 // https://stackoverflow.com/questions/73715295/react-hook-form-with-zod-resolver-optional-field
 const EditPantryValidator = z.object({
@@ -50,6 +51,7 @@ const EditPantryForm = ({
   pantry: {
     name: string;
     description: string;
+    pantryId: string;
   };
 }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -65,7 +67,8 @@ const EditPantryForm = ({
 
   const onSubmit = async (content: FormData) => {
     setIsLoading(true);
-    createPantryAction({
+    updatePantry({
+      pantryId: pantry.pantryId,
       pantryName: content.name,
       pantryDescription: content.description ? content.description : "",
     })
@@ -73,7 +76,7 @@ const EditPantryForm = ({
         setIsLoading(false);
         toast({
           title: "Success!",
-          description: "Your pantry was created.",
+          description: "Your pantry was updated.",
         });
 
         router.push("/pantry");
@@ -83,9 +86,9 @@ const EditPantryForm = ({
         setIsLoading(false);
         toast({
           title: "Error!",
-          description: "There was an error in creating your pantry!",
+          description: "There was an error in updating your pantry!",
         });
-        console.log("Error from createPantryForm", error);
+        console.log("Error from editPantryForm", error);
       });
   };
 

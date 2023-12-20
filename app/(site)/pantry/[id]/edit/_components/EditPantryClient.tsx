@@ -13,7 +13,7 @@ const EditPantryForm = dynamic(
 const EditPantryClient = ({
   pantry,
 }: {
-  pantry: { name: string; description: string };
+  pantry: { pantryId: string; name: string; description: string };
 }) => {
   return <EditPantryForm pantry={pantry} />;
 };
