@@ -79,18 +79,22 @@ export async function updatePantry({
 }
 
 export async function deletePantry({ pantryId }: { pantryId: string }) {
-  const user = await getCurrentUser();
+  try {
+    const user = await getCurrentUser();
 
-  if (!user) {
-    console.log("unauthorized");
-    return;
+    if (!user) {
+      console.log("unauthorized");
+      return;
+    }
+
+    const data = await prisma.list.delete({
+      where: {
+        id: pantryId,
+      },
+    });
+
+    return data;
+  } catch (error) {
+    console.log("error in deletePantry action: ", error);
   }
-
-  const data = await prisma.list.delete({
-    where: {
-      id: pantryId,
-    },
-  });
-
-  return data;
 }
