@@ -23,8 +23,38 @@ import {
   AlertDialogTitle,
 } from "./ui/alert-dialog";
 
+import { deletePantry } from "@/app/(site)/pantry/[id]/actions";
+import { toast } from "./ui/use-toast";
+import { useRouter } from "next/navigation";
+
 export const PantryAction = ({ pantryId }: { pantryId: string }) => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
+  const handleDeletePantry = async () => {
+    setIsLoading(true);
+    deletePantry({ pantryId: pantryId })
+      .then(() => {
+        setIsLoading(false);
+        setShowDeleteDialog(false);
+        toast({
+          title: "Success!",
+          description: "Your pantry was deleted.",
+        });
+        // TODO: This causes a slight flash during refresh. Not the biggest fan
+        router.refresh();
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setShowDeleteDialog(false);
+        toast({
+          title: "Error!",
+          description: "There was an error in updating your pantry!",
+        });
+        console.log("Error from pantry-action", error);
+      });
+  };
 
   return (
     <>
@@ -69,10 +99,7 @@ export const PantryAction = ({ pantryId }: { pantryId: string }) => {
             <Button
               variant="destructive"
               onClick={() => {
-                setShowDeleteDialog(false);
-                // toast({
-                //   description: "This preset has been deleted.",
-                // });
+                handleDeletePantry();
               }}
             >
               Delete
