@@ -6,7 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Link from "next/link";
 
 const PantryCard = ({
   name,
@@ -18,22 +17,20 @@ const PantryCard = ({
   description: string;
 }) => {
   return (
-    <Link className="focus:outline-none group" href={`/pantry/${pantryId}`}>
-      <Card>
-        <CardHeader className="border-b p-0"></CardHeader>
-        <CardContent className="grid gap-[2px] p-4">
-          <CardTitle className="truncate py-[2px]">
-            <div className="flex justify-between">
-              {name}
-              <PantryAction pantryId={pantryId} />
-            </div>
-          </CardTitle>
-          <CardDescription className="line-clamp-2">
-            {description}
-          </CardDescription>
-        </CardContent>
-      </Card>
-    </Link>
+    <Card>
+      <CardHeader className="border-b p-0"></CardHeader>
+      <CardContent className="grid gap-[2px] p-4">
+        <CardTitle className="truncate py-[2px]">
+          <div className="flex justify-between">
+            {name}
+            <PantryAction pantryId={pantryId} />
+          </div>
+        </CardTitle>
+        <CardDescription className="line-clamp-2">
+          {description}
+        </CardDescription>
+      </CardContent>
+    </Card>
   );
 };
 
