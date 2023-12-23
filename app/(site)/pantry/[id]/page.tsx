@@ -23,7 +23,7 @@ dayjs.extend(timezone);
 // https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes#optional-catch-all-segments
 export default async function Pantry({ params }: { params: { id: string } }) {
   const pantryId = params.id;
-  const data = await getPantry({ pantryId: pantryId });
+  const data = await getPantry({ pantryId: pantryId, needListItems: true });
   const pantryItems = await getPantryItems({ pantryId: pantryId });
 
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -44,12 +44,6 @@ export default async function Pantry({ params }: { params: { id: string } }) {
       />
       <div className="flex gap-x-2">
         <Link
-          href={`/pantry/${pantryId}/edit`}
-          className={cn(buttonVariants({ size: "sm" }), "w-fit")}
-        >
-          Update Pantry
-        </Link>
-        <Link
           href={`/pantry/${pantryId}/create`}
           className={cn(buttonVariants({ size: "sm" }), "w-fit")}
         >
@@ -63,6 +57,7 @@ export default async function Pantry({ params }: { params: { id: string } }) {
           <div className="grid items-center gap-6 pb-3 pt-3 sm:grid-cols-2 md:grid-cols-2">
             {pantryItems &&
               pantryItems.map((pantryItem) => {
+                // TODO: make this into a pantry item card component
                 return (
                   <div key={pantryItem.id}>
                     <Card className="flex h-full flex-col dark:hover:border-neutral-900 hover:border-neutral-100 transition focused">
