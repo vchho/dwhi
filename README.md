@@ -24,6 +24,12 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 This project's database ORM uses [Prisma](https://www.prisma.io/).
 
+First time with the repo and need to initialize the db?
+
+```bash
+npx prisma migrate dev
+```
+
 Made a change to the schema?
 
 ```bash
