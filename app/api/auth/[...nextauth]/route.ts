@@ -19,6 +19,14 @@ declare module "next-auth" {
 
 export const nextAuthOptions = {
   adapter: PrismaAdapter(prisma),
+  events: {
+    async linkAccount({ user }) {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { emailVerified: new Date() },
+      });
+    },
+  },
   session: {
     strategy: "jwt",
   },
