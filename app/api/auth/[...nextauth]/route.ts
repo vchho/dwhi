@@ -4,7 +4,6 @@ import DiscordProvider from "next-auth/providers/discord";
 import GithubProvider from "next-auth/providers/github";
 import { prisma } from "@/lib/prisma";
 import { env } from "../../../../env.mjs";
-// import { prisma } from "@/lib/prisma";
 import type { UserRole } from "@prisma/client";
 // import randomstring from "randomstring";
 
@@ -26,6 +25,10 @@ export const nextAuthOptions = {
         data: { emailVerified: new Date() },
       });
     },
+  },
+  pages: {
+    signIn: "/auth/sign-in",
+    // error: "/auth/error",
   },
   session: {
     strategy: "jwt",
