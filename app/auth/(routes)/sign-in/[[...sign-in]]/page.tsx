@@ -1,19 +1,42 @@
 "use client";
 
-import { MouseEvent } from "react";
+import { useTransition } from "react";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { LoginSchema } from "@/schemas/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Social } from "@/components/auth/socials";
 
 const LoginPage = () => {
   const searchParams = useSearchParams();
+
+  const [isPending, startTransition] = useTransition();
 
   const urlError =
     searchParams.get("error") === "OAuthAccountNotLinked"
       ? "Email already in use with different provider!"
       : "";
+
+  const form = useForm<z.infer<typeof LoginSchema>>({
+    resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
   return (
     <div className="container relative min-h-screen flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
@@ -43,47 +66,56 @@ const LoginPage = () => {
               Choose your preferred sign in method
             </p>
           </div>
+          <Form {...form}>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      placeholder="john.doe@example.com"
+                      type="email"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      placeholder="******"
+                      type="password"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button disabled={isPending} type="submit" className="w-full">
+              Login
+            </Button>
 
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={(e: MouseEvent) => {
-              // Apparently this fixes a next-auth issue
-              // https://stackoverflow.com/questions/74180557/next-auth-next-autherrorclient-fetch-error-networkerror-when-attempting-to
-              e.preventDefault();
-              signIn("discord", {
-                callbackUrl: `${location.origin}/pantry`,
-              });
-            }}
-          >
-            Log in via Discord
-          </Button>
+            <Link
+              className="inline-flex items-center justify-center whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 text-primary underline-offset-4 hover:underline h-8 rounded-md px-3 text-xs font-normal w-full"
+              href={`/auth/sign-up`}
+            >
+              Don&apos;t have an account?
+            </Link>
+          </Form>
 
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={(e: MouseEvent) => {
-              e.preventDefault();
-              signIn("github", {
-                callbackUrl: `${location.origin}/pantry`,
-              });
-            }}
-          >
-            Log in via Github
-          </Button>
-
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={(e: MouseEvent) => {
-              e.preventDefault();
-              signIn("google", {
-                callbackUrl: `${location.origin}/pantry`,
-              });
-            }}
-          >
-            Log in via Google
-          </Button>
+          <Social />
 
           <div className="bg-destructive/15 p-3 rounded-md gap-x-2 text-sm text-destructive text-center">
             <p>{urlError}</p>
