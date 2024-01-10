@@ -5,8 +5,16 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { useSearchParams } from "next/navigation";
 
 const LoginPage = () => {
+  const searchParams = useSearchParams();
+
+  const urlError =
+    searchParams.get("error") === "OAuthAccountNotLinked"
+      ? "Email already in use with different provider!"
+      : "";
+
   return (
     <div className="container relative min-h-screen flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
@@ -50,6 +58,36 @@ const LoginPage = () => {
           >
             Log in via Discord
           </Button>
+
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={(e: MouseEvent) => {
+              e.preventDefault();
+              signIn("github", {
+                callbackUrl: `${location.origin}/pantry`,
+              });
+            }}
+          >
+            Log in via Github
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={(e: MouseEvent) => {
+              e.preventDefault();
+              signIn("google", {
+                callbackUrl: `${location.origin}/pantry`,
+              });
+            }}
+          >
+            Log in via Google
+          </Button>
+
+          <div className="bg-destructive/15 p-3 rounded-md gap-x-2 text-sm text-destructive text-center">
+            <p>{urlError}</p>
+          </div>
 
           <p className="px-8 text-center text-sm text-muted-foreground">
             By clicking continue, you agree to our{" "}

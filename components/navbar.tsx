@@ -74,7 +74,7 @@ export const Navbar = async () => {
           <UserAccountDropdown session={session} />
         ) : (
           // <p>User Dropdown here</p>
-          <Link href="/sign-in" className=" tracking-tighter">
+          <Link href="/auth/sign-in" className=" tracking-tighter">
             <Button className="mx-2 w-full" size="sm">
               Sign In
               <div className="sr-only">Sign In</div>
