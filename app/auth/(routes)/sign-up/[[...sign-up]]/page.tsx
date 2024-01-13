@@ -158,11 +158,11 @@ const RegisterPage = () => {
             </form>
           </Form>
 
-          <Social />
+          {/* <Social /> */}
 
-          <div className="bg-destructive/15 p-3 rounded-md gap-x-2 text-sm text-destructive text-center">
+          {/* <div className="bg-destructive/15 p-3 rounded-md gap-x-2 text-sm text-destructive text-center">
             <p>{urlError}</p>
-          </div>
+          </div> */}
 
           <p className="px-8 text-center text-sm text-muted-foreground">
             By clicking continue, you agree to our{" "}
