@@ -42,6 +42,12 @@ Want to sync your local Prisma Schema to the prod database?
 npx prisma db push
 ```
 
+## Getting your Client and Secret Id
+
+### Google
+
+- Go [here](https://console.cloud.google.com/apis/dashboard)
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
