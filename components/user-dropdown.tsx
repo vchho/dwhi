@@ -3,7 +3,7 @@ import { FC } from "react";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { Session } from "next-auth";
-import { Icon, Icons } from "./icons";
+import { Icons } from "./icons";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,42 +17,8 @@ interface UserAccountDropdownProps {
   session: Session;
 }
 
-export type dropdownItemType = {
-  id: number;
-  label: string;
-  Icon: Icon;
-  href: string;
-};
-
-const dropdownItem: dropdownItemType[] = [
-  {
-    id: 3,
-    label: "Profile",
-    Icon: Icons.user,
-    href: "/profile",
-  },
-  {
-    id: 1,
-    label: "About",
-    Icon: Icons.info,
-    href: "/about",
-  },
-];
-
 const UserAccountDropdown: FC<UserAccountDropdownProps> = ({ session }) => {
   const { user } = session;
-  const AdminItem = dropdownItem.find((item) => item.href === "/admin/users");
-
-  if (user.role === "ADMIN" && !AdminItem) {
-    dropdownItem.push({
-      id: 2,
-      label: "Admin Panel",
-      Icon: Icons.admin,
-      href: "/admin/users",
-    });
-  } else if (user.role !== "ADMIN" && AdminItem) {
-    dropdownItem.splice(1, 1);
-  }
 
   return (
     <DropdownMenu>
@@ -73,16 +39,34 @@ const UserAccountDropdown: FC<UserAccountDropdownProps> = ({ session }) => {
 
         <DropdownMenuSeparator />
 
-        {dropdownItem.map((item) => (
-          <DropdownMenuItem key={item.id} asChild className="cursor-pointer">
-            <Link href={item.href}>
+        <DropdownMenuItem asChild className="cursor-pointer">
+          <Link href="/profile">
+            <div className="flex items-center gap-x-2">
+              {<Icons.user className="h-4 w-4" />}
+              {"Profile"}
+            </div>
+          </Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem asChild className="cursor-pointer">
+          <Link href="/about">
+            <div className="flex items-center gap-x-2">
+              {<Icons.info className="h-4 w-4" />}
+              {"About"}
+            </div>
+          </Link>
+        </DropdownMenuItem>
+
+        {user.role === "ADMIN" && (
+          <DropdownMenuItem asChild className="cursor-pointer">
+            <Link href="/admin">
               <div className="flex items-center gap-x-2">
-                <item.Icon className="h-4 w-4" />
-                {item.label}
+                {<Icons.admin className="h-4 w-4" />}
+                {"Admin"}
               </div>
             </Link>
           </DropdownMenuItem>
-        ))}
+        )}
 
         <DropdownMenuSeparator />
 
